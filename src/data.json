@@ -1,0 +1,15 @@
+[
+	{
+		AIRCRAFT: "F-4E Phantom II",
+		COST: 1500,
+		SPEED: 6.1,
+		MOBILITY: 2.0,
+		STABILITY: 2.0,
+		AIR-TO-AIR: 3.8,
+		AIR-TO-GROUND: 3.0,
+		DEFENSE: 1.0,
+		PARTS: {
+			MAX: 42
+		}
+	}
+]
