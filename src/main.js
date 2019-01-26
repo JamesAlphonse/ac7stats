@@ -5,6 +5,7 @@ import store from './store'
 import './registerServiceWorker'
 
 Vue.config.productionTip = false
+export const serverBus = new Vue();
 
 new Vue({
   router,
