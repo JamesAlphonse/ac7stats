@@ -7,7 +7,10 @@
 
 	<div class="aircraft-name">
 		<div class="aircraft-name-custom">
-			<input :id="aircraft.ID" class="aircraft-name-custom-input" type="text" name="aircraft-name-custom" placeholder="Custom Set Name" @keyup="editCustomName" :value="aircraft.CUSTOM_NAME" />
+			<form autocomplete="off">
+				<input :id="aircraft.ID" class="aircraft-name-custom-input" type="text" name="aircraft-name-custom" placeholder="Custom Set Name" @keyup="editCustomName" :value="aircraft.CUSTOM_NAME" />
+
+			</form>
 		</div>
 
 		<div class="aircraft-name-default">
@@ -166,8 +169,8 @@ $text-gold: #BDB37D;
 			align-items: center;
 
 			&-input {
-				border: 0px;
-				border: 1px solid #707070;
+				border: 1px solid transparent;
+				outline: 0;
 				background: #0D1225;
 				width: 188px;
 				height: 30px;
@@ -177,11 +180,11 @@ $text-gold: #BDB37D;
 			}
 
 			&-input:hover {
-				border-color: $text-gold;
+				border: 1px solid $text-gold;
 			}
 
 			&-input:focus {
-				border-color: $text-gold;
+				border: 1px solid $text-gold;
 			}
 		}
 	}
