@@ -41,7 +41,7 @@ export default new Vuex.Store({
 				PART: 'Light Blisk Level 1',
 				DESCRIPTION: 'This part enhances the aircrafts acceleration ability.',
 				MODIFIER: 'SPEED',
-				VALUE: 1.5,
+				VALUE: 0.7,
         PART_TYPE: 'BODY',
         PART_SPACE: 3
 			}

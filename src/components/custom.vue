@@ -28,6 +28,7 @@
 				<div class="aircraft-specifications-stat-display-bar">
 					<div class="aircraft-specifications-stat-display-bar-inner" :id="'SPEED_' + aircraft.ID" :style="{ width: (aircraft.SPECIFICATIONS.SPEED*10) + '%' }"></div>
 					<div class="aircraft-specifications-stat-display-bar-preview" :id="'PREVIEW_SPEED_' + aircraft.ID"></div>
+					<div class="aircraft-specifications-stat-display-bar-updated" :id="'UPDATED_SPEED_' + aircraft.ID"></div>
 				</div>
 				<div class="aircraft-specifications-stat-display-numerical">{{aircraft.SPECIFICATIONS.SPEED.toFixed(1)}}</div>
 			</div>
@@ -234,7 +235,16 @@ $text-gold: #BDB37D;
 						width: 0;
 						background-color: $text-gold;
 						z-index: 900;
-						animation: blink 1.2s infinite;
+						animation: blink 1.2s ease-in infinite;
+						transition: width 0.2s;
+					}
+
+					&-updated {
+						position: absolute;
+						height: 100%;
+						width: 0;
+						background-color: #63A878;
+						z-index: 800;
 						transition: width 0.2s;
 					}
 				}

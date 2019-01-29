@@ -1,11 +1,9 @@
 <template>
-<div>
 <div class="partslist">
-	<div class="partslist-part" v-for="(part, index) in $store.state.partslist" @mouseover="preview(part.MODIFIER, part.VALUE)" @mouseout="unpreview(part.MODIFIER, part.VALUE)" @click="toggle(part.MODIFIER, part.VALUE)">
+	<div class="partslist-part" v-for="(part, index) in $store.state.partslist" @mouseover="preview(part.MODIFIER, part.VALUE)" @mouseout="unpreview(part.MODIFIER, part.VALUE)" @click="toggle($event, part.MODIFIER, part.VALUE)">
 		{{ part.PART }}<br/>
 		{{ part.DESCRIPTION }}
 	</div>
-</div>
 </div>
 </template>
 
@@ -35,6 +33,11 @@ $text-gold: #BDB37D;
 		color: $text-gold;
 		border: 1px solid $text-gold;
 	}
+
+	.selected {
+		color: $text-gold;
+		border: 1px solid $text-gold;
+	}
 }
 </style>
 
@@ -57,6 +60,13 @@ methods: {
 			AIRCRAFTID: this.aircraftID,
 			MODIFIER: modifier
 		})
+	},
+	toggle(e, modifier, value) {
+		// add selected prop to store data object and have classlist update that way
+		if( e.target.classList.contains('selected') )
+			e.target.classList.remove('selected')
+		else
+			e.target.classList.add('selected')
 	}
 }
 }
