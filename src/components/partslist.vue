@@ -1,7 +1,7 @@
 <template>
 <div>
 <div class="partslist">
-	<div class="partslist-part" v-for="(part, index) in $store.state.partslist" @mouseover="preview(part.MODIFIER, part.VALUE)">
+	<div class="partslist-part" v-for="(part, index) in $store.state.partslist" @mouseover="preview(part.MODIFIER, part.VALUE)" @mouseout="unpreview(part.MODIFIER, part.VALUE)" @click="toggle(part.MODIFIER, part.VALUE)">
 		{{ part.PART }}<br/>
 		{{ part.DESCRIPTION }}
 	</div>
@@ -43,11 +43,19 @@ import {serverBus} from '@/main'
 
 export default {
 name: "PARTS-LIST",
+props: ['aircraftID'],
 methods: {
 	preview(modifier, value) {
 		serverBus.$emit('preview', {
-			modifier: modifier,
-			value: value
+			AIRCRAFTID: this.aircraftID,
+			MODIFIER: modifier,
+			VALUE: value
+		})
+	},
+	unpreview(modifier, value) {
+		serverBus.$emit('unpreview', {
+			AIRCRAFTID: this.aircraftID,
+			MODIFIER: modifier
 		})
 	}
 }

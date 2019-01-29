@@ -41,7 +41,9 @@ export default new Vuex.Store({
 				PART: 'Light Blisk Level 1',
 				DESCRIPTION: 'This part enhances the aircrafts acceleration ability.',
 				MODIFIER: 'SPEED',
-				VALUE: '1.5'
+				VALUE: 1.5,
+        PART_TYPE: 'BODY',
+        PART_SPACE: 3
 			}
 		],
 
@@ -71,6 +73,9 @@ export default new Vuex.Store({
   		newSet.SPECIFICATIONS.UPDATED_AIR_TO_AIR = {...newSet.AIR_TO_AIR}
   		newSet.SPECIFICATIONS.UPDATED_AIR_TO_GROUND = {...newSet.AIR_TO_GROUND}
   		newSet.SPECIFICATIONS.UPDATED_DEFENSE = {...newSet.DEFENSE}
+      newSet.PARTS.BODY = 0
+      newSet.PARTS.ARMS = 0
+      newSet.PARTS.MISC = 0
   		commit('addCustom', newSet)
   	},
   	removeCustom : ({commit, getters}, payload) => {
