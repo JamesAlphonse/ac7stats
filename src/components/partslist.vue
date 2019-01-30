@@ -1,11 +1,9 @@
 <template>
-<div>
 <div class="partslist">
-	<div class="partslist-part" v-for="(part, index) in $store.state.partslist" @mouseover="preview(part.MODIFIER, part.VALUE)" @mouseout="unpreview(part.MODIFIER, part.VALUE)">
+	<div class="partslist-part" v-for="(part, index) in $store.state.partslist" @mouseover="preview(part.ID)" @mouseout="unpreview(part.ID)" @click="toggle($event, part.ID)">
 		{{ part.PART }}<br/>
 		{{ part.DESCRIPTION }}
 	</div>
-</div>
 </div>
 </template>
 
@@ -35,6 +33,11 @@ $text-gold: #BDB37D;
 		color: $text-gold;
 		border: 1px solid $text-gold;
 	}
+
+	.selected {
+		color: $text-gold;
+		border: 1px solid $text-gold;
+	}
 }
 </style>
 
@@ -45,18 +48,28 @@ export default {
 name: "PARTS-LIST",
 props: ['aircraftID'],
 methods: {
-	preview(modifier, value) {
-		serverBus.$emit('preview', {
-			aircraftID: this.aircraftID,
-			modifier: modifier,
-			value: value
+	preview(partID) {
+		serverBus.$emit('previewPart', {
+			AIRCRAFTID: this.aircraftID,
+			PARTID: partID
 		})
 	},
-	unpreview(modifier) {
+	unpreview(partID) {
 		serverBus.$emit('unpreview', {
-			aircraftID: this.aircraftID,
-			modifier: modifier
+			AIRCRAFTID: this.aircraftID,
+			PARTID: partID
 		})
+	},
+	toggle(e, partID) {
+		if( e.target.classList.contains('selected') ){
+			e.target.classList.remove('selected')
+		}
+		else{
+			e.target.classList.add('selected')
+			/*serverBus.$emit('addPart', {
+
+			})*/
+		}
 	}
 }
 }

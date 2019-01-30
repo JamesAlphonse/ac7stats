@@ -27,7 +27,8 @@
 			<div class="aircraft-specifications-stat-display">
 				<div class="aircraft-specifications-stat-display-bar">
 					<div class="aircraft-specifications-stat-display-bar-inner" :id="'SPEED_' + aircraft.ID" :style="{ width: (aircraft.SPECIFICATIONS.SPEED*10) + '%' }"></div>
-					<div class="aircraft-specifications-stat-display-bar-innerPreview" :id="'PREVIEW_SPEED_' + aircraft.ID"></div>
+					<div class="aircraft-specifications-stat-display-bar-preview" :id="'PREVIEW_SPEED_' + aircraft.ID"></div>
+					<div class="aircraft-specifications-stat-display-bar-updated" :id="'UPDATED_SPEED_' + aircraft.ID"></div>
 				</div>
 				<div class="aircraft-specifications-stat-display-numerical">{{aircraft.SPECIFICATIONS.SPEED.toFixed(1)}}</div>
 			</div>
@@ -139,9 +140,9 @@ $text-blue: #B0DAFD;
 $text-gold: #BDB37D;
 
 @keyframes blink {
-  50% {
-    opacity: 0.0;
-  }
+	50% {
+		opacity: 0;
+	}
 }
 
 .aircraft {
@@ -222,16 +223,29 @@ $text-gold: #BDB37D;
 					&-inner {
 						position: absolute;
 						height: 100%;
+						width: 0;
 						background-color: $text-blue;
 						z-index: 1000;
+						transition: width 0.2s;
 					}
 
-					&-innerPreview {
+					&-preview {
 						position: absolute;
 						height: 100%;
+						width: 0;
 						background-color: $text-gold;
 						z-index: 900;
-						animation: blink 1.2s ease infinite;
+						animation: blink 1.2s ease-in infinite;
+						transition: width 0.2s;
+					}
+
+					&-updated {
+						position: absolute;
+						height: 100%;
+						width: 0;
+						background-color: #63A878;
+						z-index: 800;
+						transition: width 0.2s;
 					}
 				}
 
@@ -299,13 +313,13 @@ components: {
 	partslist
 },
 mounted() {
-	serverBus.$on('preview', payload => {
-		if(payload.aircraftID === this.aircraft.ID)
-			this.preview(payload)
+	serverBus.$on('previewPart', payload => {
+		if(payload.AIRCRAFTID === this.aircraft.ID)
+			this.previewPart(payload)
 	})
 
 	serverBus.$on('unpreview', payload => {
-		if(payload.aircraftID === this.aircraft.ID)
+		if(payload.AIRCRAFTID === this.aircraft.ID)
 			this.unpreview(payload)
 	})
 },
@@ -328,14 +342,14 @@ methods: {
 			e.target.innerText = "SHOW PARTS LIST"
 		}
 	},
-	preview(payload) {
-		let defaultWidth = parseInt(document.getElementById(payload.modifier + '_' + payload.aircraftID).style.width)
-		let preview = document.getElementById('PREVIEW' + '_' + payload.modifier + '_' + payload.aircraftID)
-		let previewWidth = defaultWidth + ((payload.value*10)) + '%'
-		preview.style.width=previewWidth
+	async previewPart(payload) {
+		let part = await this.$store.dispatch('getPartByID', payload.PARTID)
+		let defaultStat = document.getElementById(part.MODIFIER + '_' + payload.AIRCRAFTID)
+		let previewStat = document.getElementById('PREVIEW_' + part.MODIFIER + '_' + payload.AIRCRAFTID)
+		previewStat.style.width = parseInt(defaultStat.style.width) + (part.VALUE*10) + '%'
 	},
 	unpreview(payload) {
-		document.getElementById('PREVIEW' + '_' + payload.modifier + '_' + payload.aircraftID).style.width="0"
+		/*document.getElementById('PREVIEW_' + payload.MODIFIER + '_' + payload.AIRCRAFTID).style.width = 0*/
 	}
 },
 data() {
